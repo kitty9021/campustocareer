@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
 import LogoutButton from "@/app/components/LogoutButton";
+import Logo from "@/app/components/Logo";
 
 export default function AdminLayout({
   children,
@@ -36,9 +37,14 @@ async function AdminGuard({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <nav className="bg-gray-900 text-white px-6 py-3 flex items-center justify-between text-sm">
-        <div className="flex gap-6">
-          <span className="font-semibold">CampusToCareer Admin</span>
-          <Link href="/admin/jobs" className="underline">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <Logo light size={40} href="/admin/jobs" />
+            <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
+              Admin
+            </span>
+          </div>
+          <Link href="/admin/jobs" className="hover:underline">
             Manage jobs
           </Link>
         </div>
