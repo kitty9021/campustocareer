@@ -107,7 +107,7 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
                 {job.title}
               </h2>
               <p className="text-gray-700 text-sm">{job.company}</p>
-              <span className="inline-block mt-2 text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+              <span className="location-badge inline-block mt-2 text-xs px-2 py-1 rounded-full">
                 {job.location}
               </span>
               <p className="text-gray-600 text-sm mt-3 line-clamp-2">
