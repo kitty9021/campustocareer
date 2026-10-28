@@ -60,7 +60,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <Link
               href="/register"
-              className="bg-white text-blue-700 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50"
+              className="bg-[#ffffff] text-[#1d4ed8] font-semibold px-6 py-3 rounded-lg hover:bg-blue-50"
             >
               Get started free
             </Link>
