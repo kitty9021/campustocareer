@@ -99,3 +99,26 @@ body {
 .dark .border-red-200 {
   border-color: rgba(239, 68, 68, 0.4);
 }
+/* ===== File upload box ===== */
+.file-box {
+  border: 2px solid #111827;
+  background-color: #ffffff;
+}
+.file-btn {
+  background-color: #111827;
+  color: #ffffff;
+}
+.file-btn:hover {
+  background-color: #374151;
+}
+.dark .file-box {
+  border-color: #f9fafb;
+  background-color: #111827;
+}
+.dark .file-btn {
+  background-color: #f9fafb;
+  color: #111827;
+}
+.dark .file-btn:hover {
+  background-color: #e5e7eb;
+}

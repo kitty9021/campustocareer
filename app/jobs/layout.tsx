@@ -1,28 +1,14 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import ThemeToggle from "@/app/components/ThemeToggle";
+import StudentNav from "@/app/components/StudentNav";
 
-export const metadata: Metadata = {
-  title: "CampusToCareer",
-  description: "Find jobs and internships made for students and freshers.",
-};
-
-const themeScript = `try{if(localStorage.getItem("theme")==="dark"){document.documentElement.classList.add("dark")}}catch(e){}`;
-
-export default function RootLayout({
+export default function JobsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body>
-        {children}
-        <ThemeToggle />
-      </body>
-    </html>
+    <>
+      <StudentNav />
+      {children}
+    </>
   );
 }

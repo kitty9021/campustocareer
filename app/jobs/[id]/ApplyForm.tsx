@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
 
@@ -13,6 +13,7 @@ export default function ApplyForm({
 }) {
   const router = useRouter();
   const supabase = createClient();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState("");
@@ -70,23 +71,43 @@ export default function ApplyForm({
   }
 
   return (
-    <form onSubmit={handleApply} className="space-y-3">
-      <label className="block text-sm font-medium text-gray-900">
+    <form onSubmit={handleApply} className="space-y-4">
+      <p className="text-sm font-medium text-gray-900">
         Upload your resume (PDF, max 5 MB)
-      </label>
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-        className="block w-full text-sm text-gray-900"
-      />
+      </p>
 
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      <div className="file-box rounded-xl p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+        <input
+          ref={inputRef}
+          type="file"
+          accept="application/pdf"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+          className="hidden"
+        />
+
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="file-btn shrink-0 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          Choose PDF
+        </button>
+
+        <p className="text-sm text-gray-700 truncate">
+          {file ? file.name : "No file chosen"}
+        </p>
+      </div>
+
+      {error && (
+        <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        className="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-blue-700 disabled:opacity-50"
       >
         {loading ? "Applying..." : "Apply now"}
       </button>
