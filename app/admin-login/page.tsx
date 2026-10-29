@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-1000 via-sky-600 to-slate-1000 p-4">
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-white p-8 rounded-lg shadow space-y-4"
