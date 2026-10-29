@@ -5,7 +5,40 @@ import { createClient } from "@/app/lib/supabase/server";
 
 const PAGE_SIZE = 10;
 
-type Params = Promise<{ q?: string; location?: string; page?: string }>;
+const CATEGORIES: Record<string, { label: string; keywords: string[] }> = {
+  it: {
+    label: "IT & Software",
+    keywords: [
+      "developer", "software", "devops", "cloud", "sql", "database", "test",
+      "it support", "technical support", "network", "cyber", "hacking",
+      "machine learning", "data", "site reliability", "embedded", "full stack",
+    ],
+  },
+  design: {
+    label: "Design",
+    keywords: ["design", "graphic", "video", "ux", "ui developer"],
+  },
+  marketing: {
+    label: "Marketing",
+    keywords: [
+      "marketing", "seo", "social media", "content", "copywriter", "brand", "email",
+    ],
+  },
+  business: {
+    label: "Business & HR",
+    keywords: [
+      "recruit", "hr generalist", "business", "sales", "operations",
+      "management", "project", "admin", "customer",
+    ],
+  },
+};
+
+type Params = Promise<{
+  q?: string;
+  location?: string;
+  category?: string;
+  page?: string;
+}>;
 
 export default function JobsPage({ searchParams }: { searchParams: Params }) {
   return (
@@ -26,18 +59,20 @@ export default function JobsPage({ searchParams }: { searchParams: Params }) {
 function pageLink(
   q: string | undefined,
   location: string | undefined,
+  category: string | undefined,
   page: number
 ) {
   const params = new URLSearchParams();
   if (q) params.set("q", q);
   if (location) params.set("location", location);
+  if (category) params.set("category", category);
   if (page > 1) params.set("page", String(page));
   const s = params.toString();
   return s ? `/jobs?${s}` : "/jobs";
 }
 
 async function JobsList({ searchParams }: { searchParams: Params }) {
-  const { q, location, page: pageParam } = await searchParams;
+  const { q, location, category, page: pageParam } = await searchParams;
   const supabase = await createClient();
 
   const {
@@ -58,6 +93,11 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
 
   const term = q ? q.replace(/[%,()]/g, "").trim() : "";
   const loc = location ? location.replace(/[%,()]/g, "").trim() : "";
+  const cat = category && CATEGORIES[category] ? CATEGORIES[category] : null;
+
+  if (cat) {
+    query = query.or(cat.keywords.map((k) => `title.ilike.%${k}%`).join(","));
+  }
 
   if (loc) {
     query = query.ilike("location", `%${loc}%`);
@@ -78,10 +118,12 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
 
   const total = count ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const hasFilters = Boolean(term || loc || cat);
 
   return (
     <>
       <form className="flex flex-col sm:flex-row gap-2 mb-4">
+        {cat && category && <input type="hidden" name="category" value={category} />}
         <input
           type="text"
           name="q"
@@ -106,12 +148,20 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
 
       {error && <p className="text-red-600">Error: {error.message}</p>}
 
-      <p className="text-sm text-gray-500 mb-4">
-        {total} {total === 1 ? "job" : "jobs"} found
-        {term ? ` for "${term}"` : ""}
-        {loc ? ` in "${loc}"` : ""}
-        {total > 0 ? ` · Page ${page} of ${totalPages}` : ""}
-      </p>
+      <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-gray-500">
+        <span>
+          {total} {total === 1 ? "job" : "jobs"} found
+          {cat ? ` in ${cat.label}` : ""}
+          {term ? ` for "${term}"` : ""}
+          {loc ? ` in "${loc}"` : ""}
+          {total > 0 ? ` · Page ${page} of ${totalPages}` : ""}
+        </span>
+        {hasFilters && (
+          <Link href="/jobs" className="text-blue-600 underline">
+            Clear filters
+          </Link>
+        )}
+      </div>
 
       {jobs && jobs.length === 0 && (
         <div className="bg-white p-8 rounded-xl text-center text-gray-600">
@@ -164,7 +214,7 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
         <div className="flex items-center justify-between mt-8">
           {page > 1 ? (
             <Link
-              href={pageLink(q, location, page - 1)}
+              href={pageLink(q, location, category, page - 1)}
               className="bg-white border border-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-50"
             >
               ← Previous
@@ -179,7 +229,7 @@ async function JobsList({ searchParams }: { searchParams: Params }) {
 
           {page < totalPages ? (
             <Link
-              href={pageLink(q, location, page + 1)}
+              href={pageLink(q, location, category, page + 1)}
               className="bg-white border border-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-50"
             >
               Next →

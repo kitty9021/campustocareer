@@ -41,7 +41,7 @@ export default function RegisterPage() {
     "w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-indigo-700 p-4">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-900 to-sky-600 p-4">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-6">
           <Logo size={110} showText={false} />

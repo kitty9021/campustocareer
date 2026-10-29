@@ -22,10 +22,63 @@ const steps = [
   { title: "Apply with your resume", text: "Upload a PDF and send your application." },
 ];
 
+const categories = [
+  {
+    key: "it",
+    color: "cat-blue",
+    title: "IT & Software",
+    text: "Developer, IT Support",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" />
+      </svg>
+    ),
+  },
+  {
+    key: "marketing",
+    color: "cat-purple",
+    title: "Marketing",
+    text: "Social Media, SEO, Content",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 11 14-6v14L3 13v-2Z" />
+        <path d="M7 13.5V19a1.5 1.5 0 0 0 3 0v-4.5" />
+      </svg>
+    ),
+  },
+  {
+    key: "design",
+    color: "cat-pink",
+    title: "Design",
+    text: "UI/UX, Graphic Design",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3a9 9 0 1 0 0 18c1.7 0 2.5-1 2.5-2.2 0-1.3-1-1.6-1-2.8 0-1 .8-1.5 1.8-1.5H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3Z" />
+        <circle cx="7.5" cy="11" r="1" />
+        <circle cx="10" cy="7" r="1" />
+        <circle cx="15" cy="7.5" r="1" />
+      </svg>
+    ),
+  },
+  {
+    key: "business",
+    color: "cat-green",
+    title: "Business & HR",
+    text: "HR, Sales, Operations",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
+      </svg>
+    ),
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <header className="border-b border-gray-200">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <Logo size={60} />
           <nav className="flex items-center gap-3 text-sm">
@@ -42,7 +95,8 @@ export default function HomePage() {
         </div>
       </header>
 
-            <section className="relative overflow-hidden text-white">
+      {/* Hero */}
+      <section className="relative overflow-hidden text-white">
         <img
           src="/hero.jpg"
           alt=""
@@ -73,6 +127,38 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Explore by Category */}
+      <section className="max-w-6xl mx-auto px-6 py-14">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Explore by Category
+          </h2>
+          <Link
+            href="/jobs"
+            className="text-sm text-blue-600 hover:underline whitespace-nowrap"
+          >
+            View all jobs →
+          </Link>
+        </div>
+
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {categories.map((c) => (
+            <Link
+              key={c.key}
+              href={`/jobs?category=${c.key}`}
+              className={`cat-card ${c.color} rounded-2xl p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition`}
+            >
+              <div className="cat-icon mx-auto w-14 h-14 rounded-xl flex items-center justify-center">
+                {c.icon}
+              </div>
+              <h3 className="mt-4 font-semibold text-gray-900">{c.title}</h3>
+              <p className="mt-1 text-sm text-gray-600">{c.text}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Search section */}
       <section className="bg-blue-50">
         <div className="max-w-3xl mx-auto px-6 py-14 text-center">
@@ -147,6 +233,8 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      {/* Why CampusToCareer */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-2xl font-bold text-center">Why CampusToCareer?</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -162,6 +250,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* How it works */}
       <section className="bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 py-16">
           <h2 className="text-2xl font-bold text-center">How it works</h2>
@@ -179,6 +268,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-6 py-6 flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500">
           <span>© 2026 CampusToCareer. College project.</span>
