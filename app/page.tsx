@@ -73,7 +73,80 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* Search section */}
+      <section className="bg-blue-50">
+        <div className="max-w-3xl mx-auto px-6 py-14 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Find Your First Opportunity
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Explore internships and entry-level jobs designed for students and
+            freshers.
+          </p>
 
+          <form
+            action="/jobs"
+            method="get"
+            className="mt-8 bg-white border border-gray-200 rounded-2xl shadow-sm p-3 text-left"
+          >
+            <div className="flex items-center gap-3 px-3 py-3 border-b border-gray-200">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className="shrink-0 text-gray-500"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+              <input
+                type="text"
+                name="q"
+                placeholder="What job are you looking for?"
+                className="w-full outline-none text-gray-900 placeholder-gray-500"
+              />
+            </div>
+
+            <div className="flex items-center gap-3 px-3 py-3">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="shrink-0 text-gray-500"
+              >
+                <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+              <input
+                type="text"
+                name="location"
+                placeholder="Enter city or preferred location"
+                className="w-full outline-none text-gray-900 placeholder-gray-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700"
+            >
+              Explore Jobs
+            </button>
+          </form>
+
+          <p className="mt-4 text-sm text-gray-500">
+            Internships · Freshers Jobs · Entry-Level Roles
+          </p>
+        </div>
+      </section>
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-2xl font-bold text-center">Why CampusToCareer?</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">

@@ -93,7 +93,16 @@ export default function ApplyForm({
           Choose PDF
         </button>
 
-       
+        {file ? (
+          <p className="text-sm font-medium text-green-700 truncate">
+            ✓ {file.name}{" "}
+            <span className="font-normal text-gray-500">
+              ({(file.size / 1024).toFixed(0)} KB)
+            </span>
+          </p>
+        ) : (
+          <p className="text-sm text-gray-500">No PDF selected yet</p>
+        )}
       </div>
 
       {error && (
