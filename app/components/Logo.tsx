@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Logo({
   href = "/",
   light = false,
-  size =45,
+  size =90,
   showText = true,
 }: {
   href?: string;
@@ -15,7 +15,7 @@ export default function Logo({
   return (
     <Link href={href} className="inline-flex items-center gap-2">
       <Image
-        src="/logo.jpg"
+        src="/logo32.jpg"
         alt="CampusToCareer logo"
         width={size}
         height={size}
@@ -29,7 +29,7 @@ export default function Logo({
           style={{ fontSize: size * 0.5 }}
         >
           Campus
-          <span className={light ? "text-blue-200" : "text-blue-600"}>To</span>
+          <span className={light ? "text-blue-200" : "text-blue-500"}>To</span>
           Career
         </span>
       )}
