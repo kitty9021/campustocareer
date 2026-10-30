@@ -196,3 +196,16 @@ body {
 .dark .site-header {
   background-color: rgba(17, 24, 39, 0.95);
 }
+.dark .auth-page .auth-input {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.dark .auth-page .auth-input::placeholder {
+  color: #64748b !important;
+}
+
+.dark .auth-page .auth-brand-name {
+  color: #171717 !important;
+}
