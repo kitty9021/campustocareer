@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Make Tailwind's dark: classes follow the .dark class from your toggle */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,18 +15,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
 /* ===== DARK THEME ===== */
 .dark {
   color-scheme: dark;
@@ -107,6 +104,7 @@ body {
   background-color: #f3f4f6;
   color: #4b5563;
 }
+
 /* ===== File upload box ===== */
 .file-box {
   border: 2px solid #111827;
@@ -130,28 +128,7 @@ body {
 .dark .file-btn:hover {
   background-color: #e5e7eb;
 }
-.file-box {
-  border: 2px solid #111827;
-  background-color: #ffffff;
-}
-.file-btn {
-  background-color: #111827;
-  color: #ffffff;
-}
-.file-btn:hover {
-  background-color: #374151;
-}
-.dark .file-box {
-  border-color: #f9fafb;
-  background-color: #111827;
-}
-.dark .file-btn {
-  background-color: #f9fafb;
-  color: #111827;
-}
-.dark .file-btn:hover {
-  background-color: #e5e7eb;
-}
+
 /* ===== Category cards ===== */
 .cat-card {
   border: 1px solid transparent;
@@ -188,6 +165,7 @@ body {
 .dark .cat-pink .cat-icon { background: rgba(219, 39, 119, 0.3); color: #f9a8d4; }
 .dark .cat-green { background: rgba(22, 163, 74, 0.15); border-color: rgba(74, 222, 128, 0.3); }
 .dark .cat-green .cat-icon { background: rgba(22, 163, 74, 0.3); color: #86efac; }
+
 /* ===== Sticky header ===== */
 .site-header {
   background-color: rgba(255, 255, 255, 0.95);
@@ -196,16 +174,27 @@ body {
 .dark .site-header {
   background-color: rgba(17, 24, 39, 0.95);
 }
-.dark .auth-page .auth-input {
-  background-color: #ffffff !important;
-  color: #171717 !important;
-  border-color: #cbd5e1 !important;
-}
 
-.dark .auth-page .auth-input::placeholder {
-  color: #64748b !important;
+/* ===== Login / Register pages ===== */
+.dark .auth-page,
+.dark .auth-page section {
+  background-color: #0b1120;
+  color: #e5e7eb;
 }
-
+.dark .auth-page h1 {
+  color: #e2e8f0;
+}
+.dark .auth-page p {
+  color: #cbd5e1;
+}
 .dark .auth-page .auth-brand-name {
-  color: #171717 !important;
+  color: #f9fafb;
+}
+.dark .auth-page .auth-input {
+  background-color: #071022;
+  color: #f9fafb;
+  border-color: #374151;
+}
+.dark .auth-page .auth-input::placeholder {
+  color: #9ca3af;
 }

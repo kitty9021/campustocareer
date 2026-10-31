@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
 import StatusSelect from "./StatusSelect";
+import InterviewForm from "@/app/components/InterviewForm";
 
 export default function ApplicantsPage({
   params,
@@ -37,13 +38,16 @@ async function Applicants({ params }: { params: Promise<{ id: string }> }) {
 
   const { data: applications, error } = await supabase
     .from("applications")
-    .select("id, status, created_at, resume_url, profiles(full_name)")
+    .select(
+      "id, status, created_at, resume_url, interview_date, interview_time, interview_place, interview_note, profiles(full_name)"
+    )
     .eq("job_id", id)
     .order("created_at", { ascending: false });
 
   if (error) {
     return <p className="mt-4 text-red-600">Error: {error.message}</p>;
   }
+
 
   // Temporary links so the admin can open each private resume
   const paths = (applications ?? []).map((a) => a.resume_url);
@@ -77,7 +81,7 @@ async function Applicants({ params }: { params: Promise<{ id: string }> }) {
           return (
             <div
               key={app.id}
-              className="bg-white p-4 rounded-lg shadow flex items-center justify-between gap-4"
+              className="bg-white p-4 rounded-lg shadow flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
             >
               <div>
                 <p className="font-semibold text-gray-900">
@@ -87,6 +91,7 @@ async function Applicants({ params }: { params: Promise<{ id: string }> }) {
                   Applied on{" "}
                   {new Date(app.created_at).toLocaleDateString("en-IN")}
                 </p>
+
                 {resumeUrl ? (
                   <a
                     href={resumeUrl}
@@ -100,10 +105,23 @@ async function Applicants({ params }: { params: Promise<{ id: string }> }) {
                   <span className="text-gray-400 text-sm">Resume unavailable</span>
                 )}
               </div>
-              <StatusSelect id={app.id} current={app.status} />
+
+              <div className="space-y-3">
+                <StatusSelect id={app.id} current={app.status} />
+
+                {app.status === "Shortlisted" && (
+                  <InterviewForm
+                    applicationId={app.id}
+                    date={app.interview_date}
+                    time={app.interview_time}
+                    place={app.interview_place}
+                    note={app.interview_note}
+                  />
+                )}
+              </div>
             </div>
           );
-        })}
+         })}
       </div>
     </>
   );

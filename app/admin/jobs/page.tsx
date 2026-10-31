@@ -2,8 +2,15 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
 import DeleteButton from "./DeleteButton";
+import JobFilters from "@/app/components/JobFilters";
 
-export default function AdminJobsPage() {
+type SearchParams = Promise<{ q?: string; location?: string; sort?: string }>;
+
+export default function AdminJobsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   return (
     <main className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto">
@@ -17,54 +24,98 @@ export default function AdminJobsPage() {
           </Link>
         </div>
         <Suspense fallback={<p className="text-gray-600">Loading jobs...</p>}>
-          <JobsTable />
+          <JobsSection searchParams={searchParams} />
         </Suspense>
       </div>
     </main>
   );
 }
 
-async function JobsTable() {
+async function JobsSection({ searchParams }: { searchParams: SearchParams }) {
+  const { q, location, sort } = await searchParams;
   const supabase = await createClient();
-  const { data: jobs, error } = await supabase
-    .from("jobs")
-    .select("*")
-    .order("created_at", { ascending: false });
 
-  if (error) return <p className="text-red-600">Error: {error.message}</p>;
-  if (!jobs || jobs.length === 0)
-    return <p className="text-gray-600">No jobs yet. Add your first job.</p>;
+  // all locations, for the dropdown
+  const { data: locationRows } = await supabase.from("jobs").select("location");
+  const locations = [
+    ...new Set(
+      (locationRows ?? []).map((r) => r.location as string).filter(Boolean)
+    ),
+  ].sort();
+
+  // jobs query with search, filter and sort
+  let query = supabase.from("jobs").select("*");
+
+  if (q) {
+    const safe = q.replace(/[%,()]/g, " ").trim();
+    if (safe) {
+      query = query.or(
+        `title.ilike.%${safe}%,company.ilike.%${safe}%,location.ilike.%${safe}%`
+      );
+    }
+  }
+  if (location) query = query.eq("location", location);
+
+  if (sort === "oldest") query = query.order("created_at", { ascending: true });
+  else if (sort === "title") query = query.order("title", { ascending: true });
+  else query = query.order("created_at", { ascending: false });
+
+  const { data: jobs, error } = await query;
 
   return (
-    <div className="space-y-3">
-      {jobs.map((job) => (
-        <div
-          key={job.id}
-          className="bg-white p-4 rounded-lg shadow flex items-center justify-between gap-4"
-        >
-          <div>
-            <h2 className="font-semibold text-gray-900">{job.title}</h2>
-            <p className="text-gray-600 text-sm">
-              {job.company} · {job.location}
+    <>
+      <Suspense fallback={null}>
+        <JobFilters locations={locations} />
+      </Suspense>
+
+      {error ? (
+        <p className="text-red-600">Error: {error.message}</p>
+      ) : (
+        <>
+          <p className="mb-3 text-sm text-gray-500">
+            {jobs?.length ?? 0} jobs found
+          </p>
+
+          {(!jobs || jobs.length === 0) && (
+            <p className="text-gray-600">
+              {q || location
+                ? "No jobs match your search."
+                : "No jobs yet. Add your first job."}
             </p>
+          )}
+
+          <div className="space-y-3">
+            {jobs?.map((job) => (
+              <div
+                key={job.id}
+                className="bg-white p-4 rounded-lg shadow flex items-center justify-between gap-4"
+              >
+                <div>
+                  <h2 className="font-semibold text-gray-900">{job.title}</h2>
+                  <p className="text-gray-600 text-sm">
+                    {job.company} · {job.location}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 text-sm">
+                  <Link
+                    href={`/admin/jobs/${job.id}/applicants`}
+                    className="text-green-700 underline"
+                  >
+                    Applicants
+                  </Link>
+                  <Link
+                    href={`/admin/jobs/${job.id}/edit`}
+                    className="text-blue-600 underline"
+                  >
+                    Edit
+                  </Link>
+                  <DeleteButton id={job.id} />
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="flex items-center gap-4 text-sm">
-            <Link
-              href={`/admin/jobs/${job.id}/applicants`}
-              className="text-green-700 underline"
-            >
-              Applicants
-            </Link>
-            <Link
-              href={`/admin/jobs/${job.id}/edit`}
-              className="text-blue-600 underline"
-            >
-              Edit
-            </Link>
-            <DeleteButton id={job.id} />
-          </div>
-        </div>
-      ))}
-    </div>
+        </>
+      )}
+    </>
   );
 }

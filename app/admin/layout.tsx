@@ -44,8 +44,14 @@ async function AdminGuard({ children }: { children: React.ReactNode }) {
               Admin
             </span>
           </div>
+          <Link href="/admin/dashboard" className="hover:underline">
+            Dashboard
+          </Link>
           <Link href="/admin/jobs" className="hover:underline">
             Manage jobs
+          </Link>
+          <Link href="/admin/applicants" className="hover:underline">
+            Applicants
           </Link>
         </div>
         <LogoutButton redirectTo="/admin-login" />
