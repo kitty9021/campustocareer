@@ -10,7 +10,7 @@ export default function JobDetailPage({
   params: Promise<{ id: string }>;
 }) {
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main className="bg-gray-100 p-6">
       <div className="max-w-3xl mx-auto">
         <Link href="/jobs" className="text-blue-600 underline text-sm">
           ← Back to jobs

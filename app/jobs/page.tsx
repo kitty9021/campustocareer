@@ -42,7 +42,7 @@ type Params = Promise<{
 
 export default function JobsPage({ searchParams }: { searchParams: Params }) {
   return (
-    <main className="min-h-screen bg-gray-100 p-4 sm:p-6">
+    <main className="bg-gray-100 p-4 sm:p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900">Find your first job</h1>
         <p className="text-gray-600 mt-1 mb-6">

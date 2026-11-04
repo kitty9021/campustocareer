@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/app/components/Logo";
+import Footer from "@/app/components/Footer";
 
 const features = [
   {
@@ -129,7 +130,7 @@ export default function HomePage() {
       </section>
 
       {/* Explore by Category */}
-      <section className="max-w-6xl mx-auto px-6 py-14">
+      <section id="categories" className="max-w-6xl mx-auto px-6 py-14 scroll-mt-20">
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-2xl font-bold text-gray-900">
             Explore by Category
@@ -251,7 +252,7 @@ export default function HomePage() {
       </section>
 
       {/* How it works */}
-      <section className="bg-gray-50">
+      <section id="how-it-works" className="bg-gray-50 scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 py-16">
           <h2 className="text-2xl font-bold text-center">How it works</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -269,14 +270,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500">
-          <span>© 2026 CampusToCareer. College project.</span>
-          <Link href="/admin-login" className="hover:text-gray-800 underline">
-            Admin login
-          </Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
