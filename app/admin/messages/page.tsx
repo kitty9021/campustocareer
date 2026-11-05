@@ -36,7 +36,7 @@ export default async function AdminMessagesPage() {
     <main className="mx-auto max-w-4xl p-6">
       <h1 className="text-2xl font-bold text-gray-900">Messages</h1>
       <p className="mb-4 text-sm text-gray-500">
-        {messages?.length ?? 0} messages, {unread} unread
+        {messages?.length ?? 0} {messages?.length === 1 ? "message" : "messages"}, {unread} unread
       </p>
 
       {error && <p className="text-red-600">Error: {error.message}</p>}
@@ -65,7 +65,16 @@ export default async function AdminMessagesPage() {
             </div>
             <p className="mt-3 whitespace-pre-wrap text-sm text-gray-700">{m.message}</p>
             <div className="mt-3 flex items-center gap-4 text-sm">
-              <a href={`mailto:${m.email}`} className="text-blue-600 underline">
+              <a
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                  m.email
+                )}&su=${encodeURIComponent("Re: " + m.subject)}&body=${encodeURIComponent(
+                  "Hi " + m.name + ",\n\n"
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
                 Reply by email
               </a>
               {!m.is_read && (
