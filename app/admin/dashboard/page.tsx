@@ -2,12 +2,6 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
 
-function statusStyle(status: string) {
-  if (status === "Shortlisted") return "bg-green-100 text-green-800";
-  if (status === "Rejected") return "bg-red-100 text-red-800";
-  return "bg-yellow-100 text-yellow-800";
-}
-
 export default async function AdminDashboard() {
   const supabase = await createClient();
 
@@ -25,27 +19,39 @@ export default async function AdminDashboard() {
 
   const head = { count: "exact" as const, head: true };
 
-  const [students, jobs, total, applied, shortlisted, rejected, recent] =
-    await Promise.all([
-      supabase.from("profiles").select("*", head).eq("role", "student"),
-      supabase.from("jobs").select("*", head),
-      supabase.from("applications").select("*", head),
-      supabase.from("applications").select("*", head).eq("status", "Applied"),
-      supabase.from("applications").select("*", head).eq("status", "Shortlisted"),
-      supabase.from("applications").select("*", head).eq("status", "Rejected"),
-      supabase
-        .from("applications")
-        .select("id, status, created_at, student_id, job_id, jobs(title, company)")
-        .order("created_at", { ascending: false })
-        .limit(5),
-    ]);
+  const [
+    students,
+    jobs,
+    total,
+    applied,
+    shortlisted,
+    rejected,
+    unreadMessages,
+    recent,
+  ] = await Promise.all([
+    supabase.from("profiles").select("*", head).eq("role", "student"),
+    supabase.from("jobs").select("*", head),
+    supabase.from("applications").select("*", head),
+    supabase.from("applications").select("*", head).eq("status", "Applied"),
+    supabase.from("applications").select("*", head).eq("status", "Shortlisted"),
+    supabase.from("applications").select("*", head).eq("status", "Rejected"),
+    supabase.from("contact_messages").select("*", head).eq("is_read", false),
+    supabase
+      .from("applications")
+      .select("id, status, created_at, student_id, job_id, jobs(title, company)")
+      .eq("status", "Applied")
+      .order("created_at", { ascending: false })
+      .limit(5),
+  ]);
 
-  const recentList = recent.data ?? [];
-  const ids = [...new Set(recentList.map((a) => a.student_id))];
+  const newList = recent.data ?? [];
+  const ids = [...new Set(newList.map((a) => a.student_id))];
   const { data: profs } = ids.length
     ? await supabase.from("profiles").select("id, full_name").in("id", ids)
     : { data: [] };
   const nameOf = new Map((profs ?? []).map((p) => [p.id, p.full_name]));
+
+  const unread = unreadMessages.count ?? 0;
 
   const cards = [
     { label: "Total students", value: students.count ?? 0, color: "text-blue-600" },
@@ -69,6 +75,24 @@ export default async function AdminDashboard() {
         ))}
       </div>
 
+      {/* Unread messages */}
+      <Link
+        href="/admin/messages"
+        className="mt-4 flex items-center justify-between gap-4 rounded-lg bg-white p-5 shadow hover:shadow-md"
+      >
+        <div>
+          <p className="text-sm text-gray-500">Unread messages</p>
+          <p className="mt-1 text-3xl font-bold text-blue-600">{unread}</p>
+          <p className="mt-1 text-xs text-gray-500">
+            {unread === 0
+              ? "No new messages from visitors"
+              : "Messages sent through the Contact page"}
+          </p>
+        </div>
+        <span className="text-sm text-blue-600 underline">View messages</span>
+      </Link>
+
+      {/* New applicants */}
       <div className="mt-8 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">New applicants</h2>
         <Link href="/admin/applicants" className="text-sm text-blue-600 underline">
@@ -77,10 +101,10 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="mt-3 space-y-3">
-        {recentList.length === 0 && (
-          <p className="text-gray-600">No applications yet.</p>
+        {newList.length === 0 && (
+          <p className="text-gray-600">No new applications waiting for review.</p>
         )}
-        {recentList.map((a) => {
+        {newList.map((a) => {
           const job = Array.isArray(a.jobs) ? a.jobs[0] : a.jobs;
           return (
             <div
@@ -95,12 +119,12 @@ export default async function AdminDashboard() {
                   {job?.title} · {job?.company}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {new Date(a.created_at).toLocaleDateString("en-IN")}
+                  Applied on {new Date(a.created_at).toLocaleDateString("en-IN")}
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <span className={`rounded-full px-3 py-1 text-sm font-medium ${statusStyle(a.status)}`}>
-                  {a.status}
+                <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">
+                  Applied
                 </span>
                 <Link
                   href={`/admin/jobs/${a.job_id}/applicants`}
