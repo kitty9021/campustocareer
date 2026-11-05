@@ -1,6 +1,7 @@
 import Link from "next/link";
-import Logo from "@/app/components/Logo";
+import SiteHeader from "@/app/components/SiteHeader";
 import Footer from "@/app/components/Footer";
+
 
 const features = [
   {
@@ -78,23 +79,8 @@ const categories = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Logo size={60} />
-          <nav className="flex items-center gap-3 text-sm">
-            <Link href="/login" className="text-gray-700 hover:text-blue-700">
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Register
-            </Link>
-          </nav>
-        </div>
-      </header>
+
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden text-white">

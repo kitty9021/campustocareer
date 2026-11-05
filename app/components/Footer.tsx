@@ -21,7 +21,7 @@ const columns = [
   {
     title: "Quick Links",
     links: [
-      { label: "Contact Us", href: "mailto:your-email@example.com" },
+      { label: "Contact Us", href: "/contact" },
       { label: "Admin Login", href: "/admin-login" },
     ],
   },
