@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -106,27 +107,38 @@ export default function LoginPage() {
               />
             </div>
 
-            <div className="relative">
-              <svg
-                aria-hidden="true"
-                className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              >
-                <rect x="5" y="10" width="14" height="11" rx="2" />
-                <path d="M8 10V7a4 4 0 1 1 8 0v3" />
-                <path d="M12 14v3" />
-              </svg>
-              <input
-                type="password"
-                placeholder="Your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className={`${inputClass} pl-12`}
-              />
+            <div>
+              <div className="relative">
+                <svg
+                  aria-hidden="true"
+                  className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <rect x="5" y="10" width="14" height="11" rx="2" />
+                  <path d="M8 10V7a4 4 0 1 1 8 0v3" />
+                  <path d="M12 14v3" />
+                </svg>
+                <input
+                  type="password"
+                  placeholder="Your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className={`${inputClass} pl-12`}
+                />
+              </div>
+
+              <div className="mt-2 flex justify-end">
+                <Link
+                  href="/forgot-password"
+                  className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
 
             {error && (
