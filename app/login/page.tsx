@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -22,13 +21,30 @@ export default function LoginPage() {
     setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+      email: email.trim(),
       password,
     });
 
     if (error || !data.user) {
+      let message = error?.message ?? "Login failed";
+
+      // Supabase uses the same message for a wrong password and an unknown email,
+      // so check which one it is.
+      if (error?.message === "Invalid login credentials") {
+        const { data: registered } = await supabase.rpc("email_registered", {
+          check_email: email.trim(),
+        });
+
+        if (registered === false) {
+          message = "This email is not registered. Please create an account.";
+        } else if (registered === true) {
+          message =
+            "Incorrect password. Please try again or use Forgot Password.";
+        }
+      }
+
       setLoading(false);
-      setError(error?.message ?? "Login failed");
+      setError(message);
       return;
     }
 
