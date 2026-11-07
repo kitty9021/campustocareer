@@ -90,7 +90,7 @@ export default function HomePage() {
           className="absolute inset-0 h-full w-full object-cover object-bottom"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/85" />
-        <div className="relative max-w-6xl mx-auto px-6 py-24 text-center">
+        <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
             Your first job starts here
           </h1>
@@ -98,16 +98,16 @@ export default function HomePage() {
             CampusToCareer connects students and freshers with internships and
             entry-level jobs. Search, apply and track everything in one place.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+          <div className="mx-auto mt-8 flex max-w-xs flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
             <Link
               href="/register"
-              className="bg-[#ffffff] text-[#1d4ed8] font-semibold px-6 py-3 rounded-lg hover:bg-blue-50"
+              className="bg-[#ffffff] text-[#1d4ed8] font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 text-center"
             >
               Get started free
             </Link>
             <Link
               href="/login"
-              className="border border-white text-white px-6 py-3 rounded-lg hover:bg-white/10"
+              className="border border-white text-white px-6 py-3 rounded-lg hover:bg-white/10 text-center"
             >
               I already have an account
             </Link>

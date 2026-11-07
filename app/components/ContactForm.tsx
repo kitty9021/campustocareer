@@ -71,9 +71,8 @@ export default function ContactForm() {
   }
 
   const field =
-    "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 " +
+    "w-full min-w-0 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-base text-gray-900 sm:text-sm " +
     "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200";
-
   if (status === "sent") {
     return (
       <div className="rounded-2xl bg-white p-8 shadow">
@@ -92,26 +91,25 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-6 shadow sm:p-8">
+    <form onSubmit={handleSubmit} className="min-w-0 rounded-2xl bg-white p-5 shadow sm:p-8">
       <h2 className="text-xl font-semibold text-gray-900">Send a Message</h2>
       <p className="mt-1 border-b border-gray-200 pb-4 text-sm text-gray-600">
         Write to us and we will reply to your email.
       </p>
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="c-name" className="mb-1 block text-xs font-semibold text-gray-700">
-            Full Name
-          </label>
-          <input
-            id="c-name"
-            className={field}
-            placeholder="Your name"
-            maxLength={100}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+      <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">        <div>
+        <label htmlFor="c-name" className="mb-1 block text-xs font-semibold text-gray-700">
+          Full Name
+        </label>
+        <input
+          id="c-name"
+          className={field}
+          placeholder="Your name"
+          maxLength={100}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
         <div>
           <label htmlFor="c-email" className="mb-1 block text-xs font-semibold text-gray-700">
             Email
@@ -164,7 +162,7 @@ export default function ContactForm() {
 
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
-      <div className="mt-5 flex items-center justify-between gap-4">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="submit"
           disabled={status === "sending"}

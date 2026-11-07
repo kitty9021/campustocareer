@@ -78,7 +78,7 @@ export default async function AdminDashboard() {
       {/* Unread messages */}
       <Link
         href="/admin/messages"
-        className="mt-4 flex items-center justify-between gap-4 rounded-lg bg-white p-5 shadow hover:shadow-md"
+        className="mt-4 flex flex-col gap-3 rounded-lg bg-white p-5 shadow hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
       >
         <div>
           <p className="text-sm text-gray-500">Unread messages</p>
@@ -89,7 +89,9 @@ export default async function AdminDashboard() {
               : "Messages sent through the Contact page"}
           </p>
         </div>
-        <span className="text-sm text-blue-600 underline">View messages</span>
+        <span className="whitespace-nowrap text-sm text-blue-600 underline">
+          View messages
+        </span>
       </Link>
 
       {/* New applicants */}

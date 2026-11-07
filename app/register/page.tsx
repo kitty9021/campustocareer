@@ -45,11 +45,11 @@ export default function RegisterPage() {
       <div
         role="img"
         aria-label="CampusToCareer"
-        className="min-h-[35vh] bg-cover bg-center md:min-h-screen"
+        className="hidden bg-cover bg-center md:block md:min-h-screen"
         style={{ backgroundImage: "url('/auth-background.jpg')" }}
       />
 
-      <section className="flex min-h-screen items-center justify-center px-6 py-10">
+      <section className="flex min-h-screen items-center justify-center px-6 pb-20 pt-10 md:py-10">
         <div className="w-full max-w-md">
           <div className="mb-6 flex flex-col items-center text-center">
             <Logo size={90} showText={false} />

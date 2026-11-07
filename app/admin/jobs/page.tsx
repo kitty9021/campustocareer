@@ -88,7 +88,7 @@ async function JobsSection({ searchParams }: { searchParams: SearchParams }) {
             {jobs?.map((job) => (
               <div
                 key={job.id}
-                className="bg-white p-4 rounded-lg shadow flex items-center justify-between gap-4"
+                className="bg-white p-4 rounded-lg shadow flex flex-wrap items-center justify-between gap-4"
               >
                 <div>
                   <h2 className="font-semibold text-gray-900">{job.title}</h2>

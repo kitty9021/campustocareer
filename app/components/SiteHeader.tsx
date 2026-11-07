@@ -26,55 +26,86 @@ export default async function SiteHeader() {
     role = data?.role ?? null;
   }
 
-  const link = "text-gray-700 hover:text-blue-700";
+  const isStudent = !!user && role !== "admin";
+  const link = "px-1 py-1 text-gray-700 hover:text-blue-700";
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-        <Logo size={60} />
-        <nav className="flex items-center gap-4 text-sm">
-          {!user && (
-            <>
-              <Link href="/login" className={link}>
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-              >
-                Register
-              </Link>
-            </>
-          )}
+      <div className="max-w-6xl mx-auto px-3 sm:px-6">
+        {/* Top row */}
+        <div className="flex items-center justify-between gap-3 py-2 sm:py-3">
+          <span className="sm:hidden">
+            <Logo size={34} />
+          </span>
+          <span className="hidden sm:inline">
+            <Logo size={60} />
+          </span>
 
-          {user && role === "admin" && (
-            <Link href="/admin/dashboard" className={link}>
-              Dashboard
+          <nav className="flex items-center gap-1.5 sm:gap-4 text-xs sm:text-sm">
+            {!user && (
+              <>
+                <Link href="/login" className={link}>
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="whitespace-nowrap rounded-md bg-blue-600 px-2.5 py-1 text-white hover:bg-blue-700 sm:rounded-lg sm:px-4 sm:py-2"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+
+            {user && role === "admin" && (
+              <Link href="/admin/dashboard" className={link}>
+                Dashboard
+              </Link>
+            )}
+
+            {isStudent && (
+              <>
+                <Link href="/jobs" className={`${link} hidden sm:inline-block`}>
+                  Find Jobs
+                </Link>
+                <Link
+                  href="/my-applications"
+                  className={`${link} hidden sm:inline-block`}
+                >
+                  My Applications
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="whitespace-nowrap rounded-md border border-gray-300 px-2.5 py-1 text-gray-700 hover:bg-gray-50 sm:rounded-lg sm:px-4 sm:py-2"
+                >
+                  Logout
+                </button>
+              </form>
+            )}
+          </nav>
+        </div>
+
+        {/* Second row: tabs for logged-in students, phones only */}
+        {isStudent && (
+          <div className="flex border-t border-gray-200 text-sm sm:hidden">
+            <Link
+              href="/jobs"
+              className="flex-1 py-2.5 text-center text-gray-700 hover:bg-gray-50"
+            >
+              Find Jobs
             </Link>
-          )}
-
-          {user && role !== "admin" && (
-            <>
-              <Link href="/jobs" className={link}>
-                Find Jobs
-              </Link>
-              <Link href="/my-applications" className={link}>
-                My Applications
-              </Link>
-            </>
-          )}
-
-          {user && (
-            <form action={logout}>
-              <button
-                type="submit"
-                className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50"
-              >
-                Logout
-              </button>
-            </form>
-          )}
-        </nav>
+            <Link
+              href="/my-applications"
+              className="flex-1 border-l border-gray-200 py-2.5 text-center text-gray-700 hover:bg-gray-50"
+            >
+              My Applications
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
