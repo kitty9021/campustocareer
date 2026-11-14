@@ -198,3 +198,18 @@ body {
 .dark .auth-page .auth-input::placeholder {
   color: #9ca3af;
 }
+/* ===== Shared tint for the search section and the footer ===== */
+.section-tint {
+  background-color: #d6e4f5;
+}
+.dark .section-tint {
+  background-color: #111c33;
+}
+/* ===== Category cards look the same in light and dark mode ===== */
+.dark a[href*="category="] h3,
+.dark a[href*="category="] h3 * {
+  color: #111827 !important;
+}
+.dark a[href*="category="] p {
+  color: #4b5563 !important;
+}

@@ -42,7 +42,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-gray-200 bg-white">
+    <footer className="section-tint mt-0 border-t border-gray-200">
       <div className="mx-auto max-w-6xl px-6 py-10">
         <div className="grid gap-10 md:grid-cols-[1fr_1.6fr]">
           {/* Brand */}

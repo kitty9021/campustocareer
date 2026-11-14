@@ -1,7 +1,8 @@
+
 import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
 import Footer from "@/app/components/Footer";
-
+import CategoryCarousel from "@/app/components/CategoryCarousel";
 
 const features = [
   {
@@ -24,62 +25,9 @@ const steps = [
   { title: "Apply with your resume", text: "Upload a PDF and send your application." },
 ];
 
-const categories = [
-  {
-    key: "it",
-    color: "cat-blue",
-    title: "IT & Software",
-    text: "Developer, IT Support",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" />
-      </svg>
-    ),
-  },
-  {
-    key: "marketing",
-    color: "cat-purple",
-    title: "Marketing",
-    text: "Social Media, SEO, Content",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m3 11 14-6v14L3 13v-2Z" />
-        <path d="M7 13.5V19a1.5 1.5 0 0 0 3 0v-4.5" />
-      </svg>
-    ),
-  },
-  {
-    key: "design",
-    color: "cat-pink",
-    title: "Design",
-    text: "UI/UX, Graphic Design",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3a9 9 0 1 0 0 18c1.7 0 2.5-1 2.5-2.2 0-1.3-1-1.6-1-2.8 0-1 .8-1.5 1.8-1.5H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3Z" />
-        <circle cx="7.5" cy="11" r="1" />
-        <circle cx="10" cy="7" r="1" />
-        <circle cx="15" cy="7.5" r="1" />
-      </svg>
-    ),
-  },
-  {
-    key: "business",
-    color: "cat-green",
-    title: "Business & HR",
-    text: "HR, Sales, Operations",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="7" width="18" height="13" rx="2" />
-        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
-      </svg>
-    ),
-  },
-];
-
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
-
       <SiteHeader />
 
       {/* Hero */}
@@ -90,14 +38,17 @@ export default function HomePage() {
           className="absolute inset-0 h-full w-full object-cover object-bottom"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/85" />
+
         <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
             Your first job starts here
           </h1>
+
           <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
             CampusToCareer connects students and freshers with internships and
             entry-level jobs. Search, apply and track everything in one place.
           </p>
+
           <div className="mx-auto mt-8 flex max-w-xs flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
             <Link
               href="/register"
@@ -105,6 +56,7 @@ export default function HomePage() {
             >
               Get started free
             </Link>
+
             <Link
               href="/login"
               className="border border-white text-white px-6 py-3 rounded-lg hover:bg-white/10 text-center"
@@ -115,43 +67,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Explore by Category */}
-      <section id="categories" className="max-w-6xl mx-auto px-6 py-14 scroll-mt-20">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Explore by Category
-          </h2>
-          <Link
-            href="/jobs"
-            className="text-sm text-blue-600 hover:underline whitespace-nowrap"
-          >
-            View all jobs →
-          </Link>
-        </div>
-
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {categories.map((c) => (
-            <Link
-              key={c.key}
-              href={`/jobs?category=${c.key}`}
-              className={`cat-card ${c.color} rounded-2xl p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition`}
-            >
-              <div className="cat-icon mx-auto w-14 h-14 rounded-xl flex items-center justify-center">
-                {c.icon}
-              </div>
-              <h3 className="mt-4 font-semibold text-gray-900">{c.title}</h3>
-              <p className="mt-1 text-sm text-gray-600">{c.text}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Explore by Category - Automatic Carousel */}
+      <CategoryCarousel />
 
       {/* Search section */}
-      <section className="bg-blue-50">
+      <section className="section-tint mt-0 border-t border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-14 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
             Find Your First Opportunity
           </h2>
+
           <p className="mt-2 text-gray-600">
             Explore internships and entry-level jobs designed for students and
             freshers.
@@ -176,6 +101,7 @@ export default function HomePage() {
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
+
               <input
                 type="text"
                 name="q"
@@ -199,6 +125,7 @@ export default function HomePage() {
                 <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" />
                 <circle cx="12" cy="10" r="2.5" />
               </svg>
+
               <input
                 type="text"
                 name="location"
@@ -223,7 +150,10 @@ export default function HomePage() {
 
       {/* Why CampusToCareer */}
       <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-2xl font-bold text-center">Why CampusToCareer?</h2>
+        <h2 className="text-2xl font-bold text-center">
+          Why CampusToCareer?
+        </h2>
+
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {features.map((f) => (
             <div
@@ -240,13 +170,17 @@ export default function HomePage() {
       {/* How it works */}
       <section id="how-it-works" className="bg-gray-50 scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-2xl font-bold text-center">How it works</h2>
+          <h2 className="text-2xl font-bold text-center">
+            How it works
+          </h2>
+
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {steps.map((s, i) => (
               <div key={s.title} className="text-center">
                 <div className="mx-auto w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
                   {i + 1}
                 </div>
+
                 <h3 className="mt-4 font-semibold">{s.title}</h3>
                 <p className="mt-1 text-gray-600 text-sm">{s.text}</p>
               </div>
