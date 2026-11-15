@@ -273,30 +273,31 @@ export default function CategoryCarousel() {
   };
 
   const arrowClass =
-    "flex shrink-0 w-10 h-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-200";
+    "hidden md:flex shrink-0 w-10 h-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-200";
 
   return (
     <section
-      className="max-w-6xl mx-auto px-6 py-14"
+      id="categories"
+      className="mx-auto w-full max-w-6xl min-w-0 overflow-hidden px-4 py-10 sm:px-6 sm:py-14"
       aria-roledescription="carousel"
       aria-label="Job categories"
     >
       {/* Heading */}
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="text-2xl font-bold text-gray-900">
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+        <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
           Explore by Category
         </h2>
 
         <Link
           href="/jobs"
-          className="text-sm text-blue-600 hover:underline whitespace-nowrap"
+          className="whitespace-nowrap text-sm text-blue-600 hover:underline"
         >
           View all jobs →
         </Link>
       </div>
 
       {/* Carousel */}
-      <div className="relative mt-8">
+      <div className="relative mt-6 sm:mt-8">
         <div
           ref={trackRef}
           onScroll={update}
@@ -306,18 +307,18 @@ export default function CategoryCarousel() {
           onBlur={() => resume(500)}
           onTouchStart={pause}
           onTouchEnd={() => resume(4000)}
-          className="flex w-full gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth py-3 -my-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex w-full min-w-0 gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth py-3 -my-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {categories.map((c) => (
             <Link
               key={c.key}
               href={`/jobs?category=${c.key}`}
-              className={`shrink-0 snap-start basis-[85%] sm:basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_3rem)/4)] rounded-2xl border p-5 sm:p-6 text-center ${
+              className={`box-border min-w-0 shrink-0 snap-start basis-full sm:basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_3rem)/4)] rounded-2xl border p-5 text-center sm:p-6 ${
                 c.cardColor
               } hover:shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all duration-300`}
             >
               <div
-                className={`mx-auto w-14 h-14 rounded-xl flex items-center justify-center ${c.iconColor}`}
+                className={`mx-auto flex h-14 w-14 items-center justify-center rounded-xl ${c.iconColor}`}
               >
                 {c.icon}
               </div>
@@ -346,7 +347,7 @@ export default function CategoryCarousel() {
           type="button"
           onClick={prev}
           aria-label="Previous categories"
-          className="absolute z-10 top-1/2 -left-13 -translate-y-1/2 flex w-10 h-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-md hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-200"
+          className={`absolute top-1/2 -left-13 z-10 -translate-y-1/2 ${arrowClass}`}
         >
           <svg
             width="20"
@@ -367,7 +368,7 @@ export default function CategoryCarousel() {
           type="button"
           onClick={next}
           aria-label="Next categories"
-          className="absolute z-10 top-1/2 -right-13 -translate-y-1/2 flex w-10 h-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-md hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-200"
+          className={`absolute top-1/2 -right-13 z-10 -translate-y-1/2 ${arrowClass}`}
         >
           <svg
             width="20"
