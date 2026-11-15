@@ -76,14 +76,14 @@ export default function HomePage() {
 
             <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs text-blue-100 sm:text-sm">
               <span>✔ Free for students</span>
-              <span>✔ 10 job categories</span>
+              <span>✔ 8+ job categories</span>
               <span>✔ Track every application</span>
             </div>
           </div>
 
           {/* Right: Animated Journey */}
           <div
-            className="j-in relative hidden h-[340px] md:block"
+            className="j-in relative hidden h-[340px] md:block md:translate-x-4"
             style={{ animationDelay: "0.2s" }}
           >
             <div className="j-float-a absolute inset-x-0 top-4 mx-auto w-[90%] rounded-2xl border border-white/20 bg-white/10 p-5 shadow-2xl backdrop-blur-md">
@@ -161,7 +161,7 @@ export default function HomePage() {
             </div>
 
             {/* Floating Interview Card */}
-            <div className="j-float-b absolute -bottom-3 left-0 flex items-center gap-3 rounded-2xl bg-white px-3 py-2.5 text-gray-900 shadow-xl">
+            <div className="j-float-b absolute -bottom-2 left-0 flex items-center gap-3 rounded-2xl bg-white px-3 py-2.5 text-gray-900 shadow-xl">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                 <svg
                   width="20"
@@ -189,13 +189,32 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Floating Category Card */}
-            <div className="j-float-a absolute right-0 top-0 rounded-2xl bg-white px-4 py-3 text-gray-900 shadow-xl">
-              <span className="block text-xs text-gray-500">Explore</span>
-              <span className="block text-sm font-semibold">
-                10 job categories
-              </span>
-            </div>
+           {/* Floating Category Card */}
+<div className="j-float-a absolute right-0 top-0 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-gray-900 shadow-xl">
+  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </svg>
+  </span>
+
+  <span>
+    <span className="block text-xs text-gray-500">Explore</span>
+    <span className="block text-sm font-semibold">8+ job categories</span>
+  </span>
+</div>
           </div>
         </div>
       </section>
