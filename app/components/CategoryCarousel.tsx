@@ -278,7 +278,7 @@ export default function CategoryCarousel() {
   return (
     <section
       id="categories"
-      className="mx-auto w-full max-w-6xl min-w-0 overflow-hidden px-4 py-10 sm:px-6 sm:py-14"
+      className="mx-auto w-full max-w-6xl min-w-0 overflow-visible px-4 py-10 sm:px-6 sm:py-14"
       aria-roledescription="carousel"
       aria-label="Job categories"
     >

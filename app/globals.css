@@ -277,6 +277,7 @@ body {
 
 
 
+
 /* ===== Hero Journey Animation ===== */
 
 @keyframes j-in {
@@ -291,136 +292,63 @@ body {
 }
 
 @keyframes j-float-a {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 @keyframes j-float-b {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(12px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
 }
 
-/* First path: travels from tick 1 to tick 2 */
+/* First path: draw and remain visible */
 @keyframes j-path-1 {
-  0%, 12% {
-    transform: scaleY(0);
-  }
-  32% {
-    transform: scaleY(1);
-  }
-  38%, 100% {
-    transform: scaleY(0);
-  }
+  0%, 12% { transform: scaleY(0); }
+  32%, 100% { transform: scaleY(1); }
 }
 
-/* Second path: travels from tick 2 to tick 3 */
+/* Second path: draw after the first path */
 @keyframes j-path-2 {
-  0%, 42% {
-    transform: scaleY(0);
-  }
-  62% {
-    transform: scaleY(1);
-  }
-  68%, 100% {
-    transform: scaleY(0);
-  }
+  0%, 42% { transform: scaleY(0); }
+  62%, 100% { transform: scaleY(1); }
 }
 
-.j-path-1 {
-  transform-origin: top;
-  animation: j-path-1 6s linear infinite;
-  z-index: 1;
-}
-
-.j-path-2 {
-  transform-origin: top;
-  animation: j-path-2 6s linear infinite;
-  z-index: 1;
-}
-/* First tick */
+/* Checkmarks */
 @keyframes j-dot-1 {
-  0%, 4% {
-    opacity: 0;
-  }
-  7%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0;
-  }
+  0%, 4% { opacity: 0; }
+  7%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
 }
 
-/* Second tick */
 @keyframes j-dot-2 {
-  0%, 32% {
-    opacity: 0;
-  }
-  36%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0;
-  }
+  0%, 32% { opacity: 0; }
+  36%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
 }
 
-/* Third tick */
 @keyframes j-dot-3 {
-  0%, 62% {
-    opacity: 0;
-  }
-  66%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0;
-  }
+  0%, 62% { opacity: 0; }
+  66%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
 }
 
-/* First step text */
+/* Step text */
 @keyframes j-row-1 {
-  0%, 4% {
-    opacity: 0.45;
-  }
-  7%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0.45;
-  }
+  0%, 4% { opacity: 0.45; }
+  7%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0.45; }
 }
 
-/* Second step text */
 @keyframes j-row-2 {
-  0%, 32% {
-    opacity: 0.45;
-  }
-  36%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0.45;
-  }
+  0%, 32% { opacity: 0.45; }
+  36%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0.45; }
 }
 
-/* Third step text */
 @keyframes j-row-3 {
-  0%, 62% {
-    opacity: 0.45;
-  }
-  66%, 90% {
-    opacity: 1;
-  }
-  96%, 100% {
-    opacity: 0.45;
-  }
+  0%, 62% { opacity: 0.45; }
+  66%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0.45; }
 }
 
 /* Animation classes */
@@ -436,42 +364,30 @@ body {
   animation: j-float-b 8s ease-in-out infinite;
 }
 
-/* Travelling green paths */
+/* Green paths */
 .j-path-1 {
-  animation: j-path-1 6s ease-in-out infinite;
+  transform-origin: top;
+  animation: j-path-1 6s linear infinite;
+  z-index: 1;
 }
 
 .j-path-2 {
-  animation: j-path-2 6s ease-in-out infinite;
+  transform-origin: top;
+  animation: j-path-2 6s linear infinite;
+  z-index: 1;
 }
 
 /* Green checkmarks */
-.j-dot-1 {
-  animation: j-dot-1 6s ease-in-out infinite;
-}
-
-.j-dot-2 {
-  animation: j-dot-2 6s ease-in-out infinite;
-}
-
-.j-dot-3 {
-  animation: j-dot-3 6s ease-in-out infinite;
-}
+.j-dot-1 { animation: j-dot-1 6s ease-in-out infinite; }
+.j-dot-2 { animation: j-dot-2 6s ease-in-out infinite; }
+.j-dot-3 { animation: j-dot-3 6s ease-in-out infinite; }
 
 /* Step text */
-.j-row-1 {
-  animation: j-row-1 6s ease-in-out infinite;
-}
+.j-row-1 { animation: j-row-1 6s ease-in-out infinite; }
+.j-row-2 { animation: j-row-2 6s ease-in-out infinite; }
+.j-row-3 { animation: j-row-3 6s ease-in-out infinite; }
 
-.j-row-2 {
-  animation: j-row-2 6s ease-in-out infinite;
-}
-
-.j-row-3 {
-  animation: j-row-3 6s ease-in-out infinite;
-}
-
-/* Reduced motion accessibility */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .j-in,
   .j-float-a,
@@ -489,15 +405,12 @@ body {
 
   .j-path-1,
   .j-path-2 {
-    height: 0;
+    transform: scaleY(1);
   }
 
   .j-dot-1,
   .j-dot-2,
-  .j-dot-3 {
-    opacity: 1;
-  }
-
+  .j-dot-3,
   .j-row-1,
   .j-row-2,
   .j-row-3 {
