@@ -52,9 +52,9 @@ export default function ForgotPassword() {
 
     // 2. Send the reset link
     const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
-    });
-
+  redirectTo:
+    "https://campustocareer-two.vercel.app/auth/callback?next=/reset-password",
+});
     setLoading(false);
 
     if (error) {
