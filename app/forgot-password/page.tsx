@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export default function ForgotPassword() {
   // Show a message if the reset link was invalid or expired
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+
     if (params.get("error") === "reset_failed") {
       setError(
         "The reset link is invalid or has expired. Please request a new one."
@@ -24,37 +26,30 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setLoading(true);
     setError("");
     setSuccess("");
 
     const cleanEmail = email.trim();
 
-    // 1. Check that the email is registered
-    const { data: registered, error: checkError } = await supabase.rpc(
-      "email_registered",
-      { check_email: cleanEmail }
+    // Detect whether the app is running inside Electron
+    const isElectron = navigator.userAgent.includes("Electron");
+
+    // Use the custom protocol inside Electron,
+    // and the normal HTTPS callback in a browser
+    const redirectTo = isElectron
+      ? "campustocareer://auth/callback?next=/reset-password"
+      : `${window.location.origin}/auth/callback?next=/reset-password`;
+
+    // Send the password reset email
+    const { error } = await supabase.auth.resetPasswordForEmail(
+      cleanEmail,
+      {
+        redirectTo,
+      }
     );
 
-    if (checkError) {
-      setLoading(false);
-      setError("Something went wrong. Please try again.");
-      return;
-    }
-
-    if (!registered) {
-      setLoading(false);
-      setError(
-        "This email is not registered. Please check it or create an account."
-      );
-      return;
-    }
-
-    // 2. Send the reset link
-    const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
-  redirectTo:
-    "https://campustocareer-two.vercel.app/auth/callback?next=/reset-password",
-});
     setLoading(false);
 
     if (error) {
@@ -63,14 +58,16 @@ export default function ForgotPassword() {
     }
 
     setSuccess(
-      "A password reset link has been sent to your email. Check your inbox and spam folder."
+      "If an account exists with this email, a password reset link has been sent. Please check your inbox and spam folder."
     );
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg sm:p-8">
-        <h1 className="text-2xl font-bold text-gray-900">Forgot Password?</h1>
+        <h1 className="text-2xl font-bold text-gray-900">
+          Forgot Password?
+        </h1>
 
         <p className="mt-2 text-sm text-gray-600">
           Enter your registered email address to receive a password reset link.
@@ -91,7 +88,7 @@ export default function ForgotPassword() {
             disabled={loading}
             className="w-full rounded-lg bg-blue-600 p-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
           >
-            {loading ? "Checking..." : "Send Reset Link"}
+            {loading ? "Sending..." : "Send Reset Link"}
           </button>
         </form>
 
@@ -111,11 +108,6 @@ export default function ForgotPassword() {
           <Link href="/login" className="text-blue-600 hover:underline">
             Back to Login
           </Link>
-          {error.startsWith("This email is not registered") && (
-            <Link href="/register" className="text-blue-600 hover:underline">
-              Create an account
-            </Link>
-          )}
         </div>
       </div>
     </div>
